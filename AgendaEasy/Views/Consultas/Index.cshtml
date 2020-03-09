@@ -1,0 +1,111 @@
+﻿@{
+    ViewBag.Title = "Consultas Agendadas";
+}
+
+
+<div class="mb-3">
+    <a class="btn btn-outline-info" id="cartButton" asp-action="AddEdit"> Agendar Consulta</a> <!-- Passando o ID para a edição -->
+</div>
+
+<form class="form-group" asp-action="Index" method="get">
+    <div class="form-actions no-color form-group">
+        <p>
+            Procurar por nome : <input type="text" class="form-control w-25 p-3" name="filtro" value="@ViewData["filtro"]" />
+            <select class="form-control w-auto p-2 m-1" name="op">
+                <option value="med" selected>Médico</option>
+                <option value="pac">Paciente</option>
+            </select>
+            <input type="submit" value="Filtrar" class="btn btn-default " /> |
+            <a asp-action="Index">Exibir Todos</a>
+        </p>
+    </div>
+</form>
+
+<table class="table table-borderless table-hover table-responsive-sm-3 p-3 shadow-sm p-3 mb-5 bg-white rounded">
+    <thead class="thead-light">
+        <tr class="text-center">
+            <th>Código</th>
+            <th>Data e Hora</th>
+            <th>Local</th>
+            <th>Prontuário</th>
+            <th>Especialidade</th>
+            <th>Médico</th>
+            <th>Ações</th>
+        </tr>
+    </thead>
+    <tbody class="text-center">
+        @foreach (AgendaEasy.Models.Consulta consulta in Model)
+        {
+            <tr id="consulta-@consulta.Id">
+                <td>@consulta.Id</td>
+                <td>@consulta.DataHora</td>
+                <td>@consulta.Local</td>
+                <td>@consulta.Prontuarios.Nome</td>
+                <td>@consulta.Especialidade.Descricao</td>
+                <td>@consulta.Medicos.Nome</td>
+
+                <td>
+                    <a class="btn btn-sm btn-outline-success" id="cartButton" asp-action="AddEdit" asp-route-id="@consulta.Id"> Editar</a> <!-- Passando o ID para a edição -->
+                    <a class="btn btn-sm btn-outline-info" id="cartButton" asp-action="Visualiza" asp-route-id="@consulta.Id"> Visualizar</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<div data-id="0" class="modal" id="delModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Excluir</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Tem certeza que deseja excluir o produto <strong><span id="nomeProdutoModal"></span></strong>?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                <button onclick="ConfirmDelProd()" type="button" class="btn btn-primary">Confirmar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script>
+    function DelProd(id, nome) {
+        $('#nomeProntuarioModal').text(nome)
+        $('#delModal').data('id', id).modal('show') //Procura o id delModal e exibe
+
+    }
+
+    function ConfirmDelProd() {
+        let id = $('#delModal').data('id')
+        //Requisição AJAX
+        let xhr = new XMLHttpRequest()
+        const url = `/Prontuarios/DelProd${id}`
+        xhr.onreadystatechange = function () {
+            if (this.readyState === 4 && this.status === 404) {
+                $('#delModal').data('id', 0).modal('hide')
+                toastr.error('Médico não locaizado', 'AgendaEasy')
+
+            }
+            if (this.readyState === 4 && this.status === 200) {
+                let tr = document.querySelector(`#medico-${id}`)
+                if (tr != null) {
+                    tr.remove()
+                }
+                $('#delModal').data('id', 0).modal('hide')
+                toastr.success('Médico excluído', 'AgendaEasy')
+
+            }
+        }
+
+        xhr.open('get', url)
+        xhr.send()
+    }
+
+
+</script>

@@ -1,0 +1,41 @@
+﻿@{
+    ViewBag.Title = "Listagem de Prontuários";
+}
+<h2>@ViewBag.Title</h2>
+<div class="mb-3">
+    <a class="btn btn-outline-info" id="cartButton" asp-action="AddEdit"> Adicionar</a> <!-- Passando o ID para a edição -->
+</div>
+
+<table class="table table-borderless table-hover table-responsive-sm-3 p-3 shadow-sm p-3 mb-5 bg-white rounded">
+    <thead class="thead-light">
+        <tr class="text-center">
+            <th>Id</th>
+            <th>Nome</th>
+            <th>CPF</th>
+            <th>Convênio</th>
+            <th>Plano</th>
+            <th>Telefone</th>
+            <th>Ações</th>
+        </tr>
+    </thead>
+    <tbody class="text-center">
+        @foreach (AgendaEasy.Models.Prontuario prontuario in Model)
+        {
+            <tr id="prontuario-@prontuario.Id">
+                <td>@prontuario.Id</td>
+                <td>@prontuario.Nome</td>
+                <td>@prontuario.CPF</td>
+                <td>@prontuario.Convenio</td>
+                <td>@prontuario.Plano</td>
+                <td>@prontuario.Telefone</td>
+
+
+                <td>
+                    <a class="btn btn-sm btn-outline-success" id="cartButton" asp-action="AddEdit" asp-route-id="@prontuario.Id"> Editar</a> <!-- Passando o ID para a edição -->
+                    <a class="btn btn-sm btn-outline-info" id="cartButton" asp-action="Visualiza" asp-route-id="@prontuario.Id"> Visualizar</a>
+                </td>
+
+            </tr>
+        }
+    </tbody>
+</table>

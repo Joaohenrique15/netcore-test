@@ -1,0 +1,50 @@
+﻿@{
+    ViewBag.Title = "Consultas Agendadas";
+}
+
+<div class="mb-3">
+    <a class="btn btn-outline-info" id="cartButton" asp-action="AddEdit"> Agendar Consulta</a> <!-- Passando o ID para a edição -->
+</div>
+
+<form class="form-group" asp-action="Index" method="get">
+    <div class="form-actions no-color form-group">
+        <p>
+            Procurar por nome : <input type="text" class="form-control w-25 p-3" name="filtro" value="@ViewData["filtro"]" />
+            <select class="form-control w-auto p-2 m-1" name="op">
+                <option value="med" selected>Médico</option>
+                <option value="pac">Paciente</option>
+            </select>
+            <input type="submit" value="Filtrar" class="btn btn-default " /> |
+            <a asp-action="Index">Exibir Todos</a>
+        </p>
+    </div>
+</form>
+
+<table class="table table-borderless table-hover table-responsive-sm-3 p-3 shadow-sm p-3 mb-5 bg-white rounded">
+    <thead class="thead-light">
+        <tr class="text-center">
+            <th>Código</th>
+            <th>Data e Hora</th>
+            <th>Local</th>
+            <th>Especialidade</th>
+            <th>Médico</th>
+            <th>Ações</th>
+        </tr>
+    </thead>
+    <tbody class="text-center">
+        @foreach (AgendaEasy.Models.Consulta consulta in Model)
+        {
+            <tr id="consulta-@consulta.Id">
+                <td>@consulta.Id</td>
+                <td>@consulta.DataHora</td>
+                <td>@consulta.Local</td>
+                <td>@consulta.Especialidade.Descricao</td>
+                <td>@consulta.Medicos.Nome</td>
+
+                <td>
+                    <a class="btn btn-sm btn-outline-info" id="cartButton" asp-action="Visualiza" asp-route-id="@consulta.Id"> Visualizar</a> <!-- Passando o ID para a edição -->
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

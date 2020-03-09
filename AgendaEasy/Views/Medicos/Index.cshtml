@@ -1,0 +1,36 @@
+﻿@{
+    ViewBag.Title = "Listagem de Médicos";
+}
+<h2>@ViewBag.Title</h2>
+<div class="mb-3">
+    <a class="btn btn-outline-info" id="cartButton" asp-action="AddEdit"> Adicionar</a> <!-- Passando o ID para a edição -->
+</div>
+
+<table class="table table-borderless table-hover table-responsive-sm-3 p-3 shadow-sm p-3 mb-5 bg-white rounded">
+    <thead class="thead-light">
+        <tr class="text-center">
+            <th>Id</th>
+            <th>Nome</th>
+            <th>Especialidade</th>
+            <th>CRM</th>
+            <th>Ações</th>
+        </tr>
+    </thead>
+    <tbody class="text-center">
+        @foreach (AgendaEasy.Models.Medico medico in Model)
+        {
+            <tr id="medico-@medico.Id">
+                <td>@medico.Id</td>
+                <td>@medico.Nome</td>
+                <td>@medico.Especialidade.Descricao</td>
+                <td>@medico.CRM</td>
+
+                <td>
+                    <a class="btn btn-sm btn-outline-success" id="cartButton" asp-action="AddEdit" asp-route-id="@medico.Id"> Editar</a> <!-- Passando o ID para a edição -->
+                    <a class="btn btn-sm btn-outline-info" id="cartButton" asp-action="Visualiza" asp-route-id="@medico.Id"> Visualizar</a>
+                </td>
+
+            </tr>
+        }
+    </tbody>
+</table>

@@ -1,0 +1,62 @@
+﻿@model Prontuario
+@{
+    ViewBag.Title = $"{(Model.Id == 0 ? "Adicionar" : "Editar")} Prontuario";
+}
+
+<h2>@ViewBag.Title</h2>
+
+<form method="post" class="w-50">
+
+    <div class="form-group">
+        <label for="txtNome">Nome:</label>
+        @Html.TextBoxFor(m => m.Nome, new { @class = "form-control", autofocus = "" })
+        <small>
+            @Html.ValidationMessageFor(m => m.Nome, null, new { @class = "text-danger" })
+        </small>
+    </div>
+
+    <div class="form-group">
+        <label>CPF:</label>
+        @Html.TextBoxFor(m => m.CPF, new { @class = "form-control" })
+        <small>
+            @Html.ValidationMessageFor(m => m.CPF, null, new { @class = "text-danger" })
+        </small>
+    </div>
+    <div class="form-group">
+        <label>Convênio:</label>
+        @Html.TextBoxFor(m => m.Convenio, new { @class = "form-control" })
+        <small>
+            @Html.ValidationMessageFor(m => m.Convenio, null, new { @class = "text-danger" })
+        </small>
+    </div>
+    <div class="form-group">
+        <label>Plano:</label>
+        @Html.TextBoxFor(m => m.Plano, new { @class = "form-control" })
+        <small>
+            @Html.ValidationMessageFor(m => m.Plano, null, new { @class = "text-danger" })
+        </small>
+    </div>
+    <div class="form-group">
+        <label>Telefone:</label>
+        @Html.TextBoxFor(m => m.Telefone, new { @class = "form-control" })
+        <small>
+            @Html.ValidationMessageFor(m => m.Telefone, null, new { @class = "text-danger" })
+        </small>
+    </div>
+
+    <div>
+        @Html.ValidationSummary(true)
+    </div>
+
+    <div class="form-group">
+        <button class="btn btn-outline-secondary">Salvar</button>
+        <a class="btn btn-outline-info" href="@Url.Action("Index")">Cancelar</a>
+    </div>
+</form>
+
+
+@section scripts{
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+    <script src="~/Scripts/bootstrap.validate.js"></script>
+}

@@ -1,0 +1,32 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Bem-Vindo :)</h1>
+    <p>Agende sua Consulta.</p>
+</div>
+
+
+<div class="content">
+    <div class="row d-flex justify-content-center">
+        <div class="col-lg-3 col-sm-3 ml-2 shadow-sm p-3 mb-5 bg-white rounded">
+            <div class="card bg-secondary text-white">
+                <div class="card-body">
+                    <i class="fas fa-user-circle fa-6x"></i>
+                    <h6 class="card-title display-4">Paciente</h6>
+                    <h2 class="lead h1"><a asp-area="Paciente" asp-controller="Paciente" asp-action="Index">Acessar</a></h2>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-sm-3 shadow-sm p-3 mb-5 bg-white rounded">
+            <div class="card bg-info text-white">
+                <div class="card-body">
+                    <i class="fas fa-user-md fa-6x"></i>
+                    <h6 class="card-title display-4"> Médico</h6>
+                    <h2 class="lead h1"><a asp-area="" asp-controller="Account" asp-action="Login">Acessar</a></h2>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
